@@ -1,0 +1,9 @@
+{
+    "path" : "~/Baseball",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}
