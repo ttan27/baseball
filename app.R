@@ -51,17 +51,17 @@ server <- function(input, output) {
     getStandings()                # call our function from above
   })
   
-  aleS <- as.data.frame(standings[1])
+  aleS <- as.data.frame(getStandings()[1])
   names(aleS) = c('Tm', 'W', 'L', 'W.L', 'GB')
-  alcS <- as.data.frame(standings[2])
+  alcS <- as.data.frame(getStandings()[2])
   names(alcS) = c('Tm', 'W', 'L', 'W.L', 'GB')
-  alwS <- as.data.frame(standings[3])
+  alwS <- as.data.frame(getStandings()[3])
   names(alwS) = c('Tm', 'W', 'L', 'W.L', 'GB')
-  nleS <- as.data.frame(standings[4])
+  nleS <- as.data.frame(getStandings()[4])
   names(nleS) = c('Tm', 'W', 'L', 'W.L', 'GB')
-  nlcS <- as.data.frame(standings[5])
+  nlcS <- as.data.frame(getStandings()[5])
   names(nlcS) = c('Tm', 'W', 'L', 'W.L', 'GB')
-  nlwS <- as.data.frame(standings[6])
+  nlwS <- as.data.frame(getStandings()[6])
   names(nlwS) = c('Tm', 'W', 'L', 'W.L', 'GB')
   
   
