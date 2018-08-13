@@ -2,10 +2,7 @@
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
 #
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+
 
 library(shiny)
 library(tidyverse)
@@ -15,17 +12,15 @@ library(DT)
 
 source('functions.R')
 
-# Define UI for application that draws a histogram
+#Defining UI
 ui <- dashboardPage(
-  dashboardHeader(title = "Basic dashboard"),
+  dashboardHeader(title = "MLB Dashboard"),
   dashboardSidebar(),
   dashboardBody(
-    # Boxes need to be put in a row (or column)
     fluidRow(
       ##title = 'AL',
       tabBox(
         title = "American League",
-        # The id lets us use input$tabset1 on the server to find the current tab
         id = "tabset1", height = "250px",
         width = 6,
         tabPanel("AL East", dataTableOutput('ale')),
@@ -43,14 +38,15 @@ ui <- dashboardPage(
   )
 )
 
-# Define server logic required to draw a histogram
+# Define server
 server <- function(input, output) {
-  # R E A C T I V E 
+  # Not yet implemented (live refresh)
   live_standings <- reactive({
     ##invalidateLater(60000)    # refresh the report every 60k milliseconds (60 seconds)
     getStandings()                # call our function from above
   })
   
+  #renaming columns
   aleS <- as.data.frame(getStandings()[1])
   names(aleS) = c('Tm', 'W', 'L', 'W.L', 'GB')
   alcS <- as.data.frame(getStandings()[2])
@@ -64,7 +60,7 @@ server <- function(input, output) {
   nlwS <- as.data.frame(getStandings()[6])
   names(nlwS) = c('Tm', 'W', 'L', 'W.L', 'GB')
   
-  
+  #outputting standings
   output$ale <- renderDataTable(aleS)
   output$alc <- renderDataTable(alcS)
   output$alw <- renderDataTable(alwS)
