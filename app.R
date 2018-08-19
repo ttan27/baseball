@@ -70,16 +70,13 @@ ui <- dashboardPage(
             box(
               title = "Team Select",
               width = 12,
-              selectInput("teamSel","Select Team",choices = getTeams()[1]),
+              selectInput("teamSel","Select Team",choices = getTeams()[2]),
               selectInput("yearSel","Select Year",choices = NULL),
-              actionButton("selTeam", "Go")
+              actionButton("selTeam", "Go") 
               
-            ),
-            tabBox(
-              title = "Batting Leaders",
-              width = 6,
-              tabPanel("AVG", )
-            ),
+            )
+          ),
+          fluidRow(
             box(
               title = "Team Results",
               width = 12,

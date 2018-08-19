@@ -44,11 +44,6 @@ getLeagueLeaders <- function(league, year, stat){
   return(statTable)
 }
 
-
-statDB <- fg_bat_leaders(2018, 2018, 'al')
-statDB <- arrange(statDB, desc(!!as.name('HR')))
-statDB <- filter(statDB, Team == 'Mariners')
-
 getTeamLeaders <- function(year, stat, team, qualified){
   url <- "https://www.baseball-reference.com/teams/"
   url <- paste(url, as.character(team), "/", as.character(year), ".shtml#all_team_batting", sep = "")
@@ -63,10 +58,8 @@ getTeamLeaders <- function(year, stat, team, qualified){
     return(statLeaderQualified[1:5, c('Name', stat)])
   }
   return(statLeader[1:5, c('Name', stat)])
-  
-}
 
-max(sea$G)
+}
 
 cleanUpTeamLeaders <- function(db){
   db <- filter(db, Rk != 'Rk')
@@ -76,14 +69,5 @@ cleanUpTeamLeaders <- function(db){
   }
   return(db)
 }
-
-seaQ <- filter(sea, PA >= 3.1*max(G))
-
-#url <- "https://www.baseball-reference.com/leagues/AL/2018-standard-batting.shtml"
-#valuation_col <- url %>%
- # read_html() %>%
-  #html_nodes(xpath='//*[@id="div_players_standard_batting"]') %>%
-  #html_table()
-
 
 
