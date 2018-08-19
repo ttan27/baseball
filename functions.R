@@ -51,14 +51,34 @@ getTeamLeaders <- function(year, stat, team, qualified){
     read_html() %>%
     html_nodes(xpath='//*[@id="team_batting"]') %>%
     html_table()
+  teamDB <- as.data.frame(teamDB[1])
   teamDB <- cleanUpTeamLeaders(teamDB)
   statLeader <- arrange(teamDB, desc(!!as.name(stat)))
-  statLeaderQualified <- filter(statLeader, PA >= 3.1*G)
+  statLeaderQualified <- filter(statLeader, PA >= 3.1*max(G))
   if(qualified == TRUE){
     return(statLeaderQualified[1:5, c('Name', stat)])
   }
   return(statLeader[1:5, c('Name', stat)])
+}
 
+getTeamPitchingLeaders <- function(year, stat, team, qualified){
+  url <- "https://www.baseball-reference.com/teams/"
+  url <- paste(url, as.character(team), "/", as.character(year), ".shtml#all_team_pitching", sep = "")
+  teamDB <- url %>%
+    read_html() %>%
+    html_nodes(xpath='//*[@id="team_pitching"]') %>%
+    html_table()
+  teamDB <- as.data.frame(teamDB[1])
+  teamDB <- cleanUpTeamLeaders(teamDB)
+  statLeader <- arrange(teamDB, desc(!!as.name(stat)))
+  if(stat == 'ERA'){
+    statLeader <- arrange(teamDB, !!as.name(stat))
+  }
+  statLeaderQualified <- filter(statLeader, IP >= 162)
+  if(qualified == TRUE){
+    return(statLeaderQualified[1:5, c('Name', stat)])
+  }
+  return(statLeader[1:5, c('Name', stat)])
 }
 
 cleanUpTeamLeaders <- function(db){
@@ -69,5 +89,4 @@ cleanUpTeamLeaders <- function(db){
   }
   return(db)
 }
-
 

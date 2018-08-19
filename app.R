@@ -76,6 +76,40 @@ ui <- dashboardPage(
               
             )
           ),
+          # fluidRow(
+          #   tabBox(
+          #     id = "teamLead",
+          #     title = "Batting Leaders",
+          #     width = 6,
+          #     tabPanel("AVG", value = "BA", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+          #     tabPanel("H", value = "H", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+          #     tabPanel("HR", value = "HR", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+          #     tabPanel("RBI", value = "RBI", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+          #     tabPanel("SB", value = "SB", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead')))
+          #   )
+          #   # tabBox(
+          #   #   id = "teamPitchLead",
+          #   #   title = "Pitching Leaders",
+          #   #   width = 6,
+          #   #   tabPanel("ERA", value = "ERA", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamPitchLead')))
+          #   #   # tabPanel("W", value = "H", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamPitchLead'))),
+          #   #   # tabPanel("SO", value = "SO", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamPitchLead'))),
+          #   #   # tabPanel("IP", value = "IP", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamPitchLead'))),
+          #   #   # tabPanel("SV", value = "SV", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamPitchLead')))
+          #   # )
+          # ),
+          fluidRow(
+            tabBox(
+              id = "teamLead",
+              title = "Batting Leaders", 
+              width = 6,
+              tabPanel("AVG", value = "BA", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+              tabPanel("H", value = "H", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+              tabPanel("HR", value = "HR", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+              tabPanel("RBI", value = "RBI", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead'))),
+              tabPanel("SB", value = "SB", div(style = 'overflow-x: scroll', DT::dataTableOutput('teamLead')))
+            )
+          ),
           fluidRow(
             box(
               title = "Team Results",
@@ -99,7 +133,13 @@ server <- function(input, output, session) {
   observeEvent(input$selTeam,{
     #output team schedule and results
     output$teamSched <- renderDataTable(getTeamDetail(input$teamSel, input$yearSel))
-    
+    #batting leaders
+    output$teamLead <- renderDataTable(
+      getTeamLeaders(input$yearSel, input$teamLead, input$teamSel, TRUE)
+    )
+    # output$teamPitchLead <- renderDataTable(
+    #   getTeamPitchingLeaders(input$yearSel, input$teamPitchLead, input$teamSel, FALSE)
+    # )
   })
 
   #renaming columns
